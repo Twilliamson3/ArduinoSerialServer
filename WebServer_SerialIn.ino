@@ -34,6 +34,10 @@ String inputString = "";         // a string to hold incoming data
 String retainString = "";         // a string to hold a copy ofincoming data
 boolean stringComplete = false;  // whether the string is complete
 
+//Timer Stuff
+unsigned long previousMillis = 0;
+const long interval = 2000;  
+
 void setup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
@@ -52,6 +56,12 @@ void setup() {
 
 
 void loop() {
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    retainString = "";
+  }
+  
   EthernetClient client = server.available();
   if (client) {
     Serial.println("new client");
@@ -68,6 +78,7 @@ void loop() {
           // send a standard http response header
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
+          client.println("Access-Control-Allow-Origin: *");
           client.println("Connection: close");  // the connection will be closed after completion of the response
           client.println();
           client.println("<!DOCTYPE HTML>");
