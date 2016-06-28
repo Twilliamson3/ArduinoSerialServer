@@ -1,5 +1,5 @@
 /*
-  Web Server
+  Web Server - Serial Port Server
 
   A simple web server that reflects a serial string to a webpage.
   using an Arduino Wiznet Ethernet shield.
