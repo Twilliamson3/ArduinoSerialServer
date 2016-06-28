@@ -36,7 +36,7 @@ boolean stringComplete = false;  // whether the string is complete
 
 //Timer Stuff
 unsigned long previousMillis = 0;
-const long interval = 2000;  
+const long interval = 5000;  
 
 void setup() {
   // Open serial communications and wait for port to open:
