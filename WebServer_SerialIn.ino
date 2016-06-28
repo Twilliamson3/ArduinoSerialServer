@@ -1,5 +1,5 @@
 /*
-  Web Server - Serial Port Server
+  Web Server
 
   A simple web server that reflects a serial string to a webpage.
   using an Arduino Wiznet Ethernet shield.
@@ -31,6 +31,7 @@ EthernetServer server(80);
 
 //Serial Port Stuff
 String inputString = "";         // a string to hold incoming data
+String retainString = "";         // a string to hold a copy ofincoming data
 boolean stringComplete = false;  // whether the string is complete
 
 void setup() {
@@ -41,6 +42,7 @@ void setup() {
   }
 
   inputString.reserve(200); //Create a buffer
+  retainString.reserve(200);
   // start the Ethernet connection and the server:
   Ethernet.begin(mac, ip);
   server.begin();
@@ -58,7 +60,7 @@ void loop() {
     while (client.connected()) {
       if (client.available() ) {
         char c = client.read();
-        Serial.write(c);
+        //Serial.write(c);
         // if you've gotten to the end of the line (received a newline
         // character) and the line is blank, the http request has ended,
         // so you can send a reply
@@ -70,18 +72,18 @@ void loop() {
           client.println();
           client.println("<!DOCTYPE HTML>");
           client.println("<html>");
-          if (stringComplete) {
-            Serial.println(inputString);
-            client.println(inputString);
-            //client.println("something");
-            // clear the string:
-            inputString = "";
-            stringComplete = false;
-          } else {
-            Serial.println("SCALE ERROR");
-            client.println("SCALE ERROR");
-            
-          }
+//          if (stringComplete) {
+            Serial.println(retainString);
+            client.println(retainString);
+//            //client.println("something");
+//            // clear the string:
+//            inputString = "";
+//            stringComplete = false;
+//          } else {
+//            Serial.println("SCALE ERROR");
+//            client.println("SCALE ERROR");
+//            
+//          }
           client.println("</html>");
           break;
         }
@@ -112,8 +114,10 @@ void serialEvent() {
     // so the main loop can do something about it:
     if (inChar == '\n') {
       stringComplete = true;
+      retainString = inputString;
+      inputString = "";
+      
     }
   }
 }
-
 
