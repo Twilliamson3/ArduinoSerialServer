@@ -81,8 +81,8 @@ void loop() {
           client.println("Access-Control-Allow-Origin: *");
           client.println("Connection: close");  // the connection will be closed after completion of the response
           client.println();
-          client.println("<!DOCTYPE HTML>");
-          client.println("<html>");
+//          client.println("<!DOCTYPE HTML>");
+//          client.println("<html>");
 //          if (stringComplete) {
             Serial.println(retainString);
             client.println(retainString);
@@ -95,7 +95,7 @@ void loop() {
 //            client.println("SCALE ERROR");
 //            
 //          }
-          client.println("</html>");
+//          client.println("</html>");
           break;
         }
         if (c == '\n') {
